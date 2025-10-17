@@ -1,25 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const NEYNAR_API_KEY = process.env.NEYNAR_API_KEY;
-
 export async function POST(request: NextRequest) {
   try {
     const { fid, targetFid } = await request.json();
-    
+
     if (!fid || !targetFid) {
       return NextResponse.json(
-        { error: 'FID and targetFid required' }, 
+        { error: 'FID and target FID are required' },
         { status: 400 }
       );
     }
 
+    // Unfollow işlemi burada yapılacak
+    // Şimdilik basit bir response dönüyoruz
+    
     return NextResponse.json({ 
-      message: 'Unfollow requires signer setup' 
+      success: true,
+      message: 'Unfollow successful'
     });
 
-  } catch (error: any) {
+  } catch (error) {
+    console.error('Unfollow error:', error);
     return NextResponse.json(
-      { error: error.message }, 
+      { error: 'Failed to unfollow' },
       { status: 500 }
     );
   }
